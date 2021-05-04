@@ -61,7 +61,7 @@ class Igra:
                 return NAPACNA_CRKA
             
 
-with open('besede.txt') as f:
+with open('besede.txt', encoding="utf-8") as f:
     bazen_besed = f.read().split() #.split() deli po praznih znakih(white space), pri nas je to presledek, .read() pa da v niz celo datoteko
 
 import random
