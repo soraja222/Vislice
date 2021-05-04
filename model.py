@@ -28,7 +28,7 @@ class Igra:
     def poraz(self):
         return self.stevilo_napak() > STEVILO_DOVOLJENIH_NAPAK
 
-    def zamaga(self):
+    def zmaga(self):
         return not self.poraz() and len(set(self.pravilne_crke())) == len(set(self.geslo)) #set smo dodal, da se črke nikjer niso ponavljale
 
     def pravilni_del_gesla(self):
