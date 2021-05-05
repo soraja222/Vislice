@@ -1,12 +1,16 @@
-STEVILO_DOVOLJENIH_NAPAK = 10
+STEVILO_DOVOLJENIH_NAPAK = 9
 PRAVILNA_CRKA, PONOVLJENA_CRKA, NAPACNA_CRKA = '+', 'o', '-'
 ZMAGA, PORAZ = 'w', 'x'
+ZACETEK = 'Z'
 
 class Igra:
 
-    def __init__(self, geslo, crke=[]):
+    def __init__(self, geslo, crke=None):
         self.geslo = geslo
-        self.crke = crke
+        if crke is None:
+            self.crke = []
+        else:
+            self.crke = crke
     
     def napacne_crke(self):
         napacne = []
@@ -35,9 +39,9 @@ class Igra:
         pravilni = ''
         for crka in self.geslo.upper(): #uganjene črke bomo napisal v velikih črkah
             if crka in self.crke:
-                pravilni += crka
+                pravilni += crka + ' '
             else:
-                pravilni += '_'
+                pravilni += '_ '
         return pravilni
 
     def nepravilni_ugibi(self):
@@ -69,3 +73,25 @@ import random
 def nova_igra():
     geslo = random.choice(bazen_besed)
     return Igra(geslo)
+
+class Vislice:
+
+    def __init__(self):
+        self.igre = {}
+
+    def prost_id_igre(self):
+        if len(self.igre) == 0:
+            return 0
+        else:
+            return max(self.igre.keys()) + 1
+
+    def nova_igra(self):
+        id_igre = self.prost_id_igre()
+        igra = nova_igra()
+        self.igre[id_igre] = (igra, ZACETEK)
+        return id_igre
+
+    def ugibaj(self, id_igre, crka):
+        igra, _ = self.igre[id_igre] # _ predstavlja stanje, ki ga ne rabmo ker ga takoj po ugibu spremenimo, zato namesto stanje napišemo _
+        stanje = igra.ugibaj(crka)
+        self.igre[id_igre] = (igra, stanje)
